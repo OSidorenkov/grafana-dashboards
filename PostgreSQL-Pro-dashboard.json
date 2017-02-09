@@ -1,0 +1,1639 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_ZABBIX",
+      "label": "Zabbix",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "alexanderzobnin-zabbix-datasource",
+      "pluginName": "Zabbix"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "grafana-piechart-panel",
+      "name": "Pie Chart",
+      "version": "1.1.4"
+    },
+    {
+      "type": "panel",
+      "id": "singlestat",
+      "name": "Singlestat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "4.0.1"
+    },
+    {
+      "type": "datasource",
+      "id": "alexanderzobnin-zabbix-datasource",
+      "name": "Zabbix",
+      "version": "1.0.0"
+    }
+  ],
+  "id": null,
+  "title": "PostgreSQL Pro",
+  "tags": [],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "sharedCrosshair": false,
+  "hideControls": false,
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_ZABBIX}",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Group",
+        "multi": false,
+        "name": "group",
+        "options": [],
+        "query": "*",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": null,
+        "tagsQuery": null,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_ZABBIX}",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Host",
+        "multi": false,
+        "name": "host",
+        "options": [],
+        "query": "$group.*",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": null,
+        "tagsQuery": null,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_ZABBIX}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Network interface",
+        "multi": true,
+        "name": "netif",
+        "options": [],
+        "query": "*.$host.Network interfaces.*",
+        "refresh": 1,
+        "regex": "/(?:Incoming|Outgoing) network traffic on (.*)/",
+        "sort": 0,
+        "tagValuesQuery": null,
+        "tagsQuery": null,
+        "type": "query"
+      }
+    ]
+  },
+  "annotations": {
+    "list": []
+  },
+  "refresh": false,
+  "schemaVersion": 13,
+  "version": 3,
+  "links": [],
+  "gnetId": null,
+  "rows": [
+    {
+      "title": "Dashboard Row",
+      "panels": [
+        {
+          "aliasColors": {},
+          "cacheTimeout": null,
+          "combine": {
+            "label": "Others",
+            "threshold": 0
+          },
+          "datasource": "${DS_ZABBIX}",
+          "editable": true,
+          "error": false,
+          "fontSize": "80%",
+          "format": "decbytes",
+          "id": 1,
+          "interval": null,
+          "legend": {
+            "percentage": true,
+            "show": true,
+            "sortDesc": false,
+            "values": false
+          },
+          "legendType": "Right side",
+          "links": [],
+          "maxDataPoints": 3,
+          "nullPointMode": "connected",
+          "pieType": "donut",
+          "span": 5,
+          "strokeWidth": "",
+          "targets": [
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "/(?!mamonsu) size/"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "C",
+              "target": ""
+            }
+          ],
+          "title": "DB size",
+          "transparent": false,
+          "type": "grafana-piechart-panel",
+          "valueName": "current"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(78, 175, 60, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "datasource": "${DS_ZABBIX}",
+          "decimals": 0,
+          "editable": true,
+          "error": false,
+          "format": "s",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "id": 2,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 1,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "targets": [
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "PostgreSQL: service uptime"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "A",
+              "target": ""
+            }
+          ],
+          "thresholds": "",
+          "title": "PostgreSQL Uptime",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
+        },
+        {
+          "aliasColors": {
+            "CPU time spent by normal programs and daemons": "#BA43A9",
+            "CPU time spent by the kernel in system activities": "#890F02",
+            "CPU time spent handling batched interrupts": "#E0F9D7",
+            "CPU time spent handling interrupts": "#BA43A9",
+            "CPU time spent waiting for I/O operations": "#EAB839"
+          },
+          "bars": false,
+          "datasource": "${DS_ZABBIX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 3,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "CPU time spent by nice(1)d programs"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": true
+              },
+              "refId": "A",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "CPU time spent by normal programs and daemons"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": true
+              },
+              "refId": "B",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "CPU time spent by the kernel in system activities"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": true
+              },
+              "refId": "C",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "CPU time spent handling batched interrupts"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": true
+              },
+              "refId": "D",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "CPU time spent handling interrupts"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": true
+              },
+              "refId": "E",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "CPU time spent waiting for I/O operations"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": true
+              },
+              "refId": "F",
+              "target": ""
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "CPU time spent",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "showTitle": false,
+      "titleSize": "h6",
+      "height": 413,
+      "repeat": null,
+      "repeatRowId": null,
+      "repeatIteration": null,
+      "collapse": false
+    },
+    {
+      "title": "Dashboard Row",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_ZABBIX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 4,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "/Memory/"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "A",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "Mapped: All mmap()ed pages"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "B",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "Committed_AS: Total committed memory"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "C",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "VMallocUsed: vmaloc() allocated by kernel"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "D",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "PageTables: Map bt virtual and physical"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "E",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "SwapCached: Fetched unmod yet swap pages"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "F",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "Slab: Kernel used memory (inode cache)"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "G",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "Free: Wasted memory"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "H",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "Cached: Parked file data (file content) cache"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "I",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "Swap: Swap space used"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "J",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "Buffers: Block device cache and dirty"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "K",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "Apps: User-space applications"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "L",
+              "target": ""
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Memory overview",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decbits",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_ZABBIX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 5,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "/PostgreSQL tuples/"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "A",
+              "target": ""
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "PostgreSQL tuples",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "showTitle": false,
+      "titleSize": "h6",
+      "height": 408,
+      "repeat": null,
+      "repeatRowId": null,
+      "repeatIteration": null,
+      "collapse": false
+    },
+    {
+      "title": "Dashboard Row",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_ZABBIX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 6,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "/PostgreSQL bgwriter/"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "A",
+              "target": ""
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "PostgreSQL buffers",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_ZABBIX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 7,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 3,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "Block devices: read requests"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "A",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "Block devices: write requests"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "B",
+              "target": ""
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "System IOPS",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "showTitle": false,
+      "titleSize": "h6",
+      "height": 413,
+      "repeat": null,
+      "repeatRowId": null,
+      "repeatIteration": null,
+      "collapse": false
+    },
+    {
+      "title": "Dashboard Row",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_ZABBIX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 8,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "PostgreSQL blocks: hit"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "A",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "PostgreSQL blocks: read"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "B",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "PostgreSQL transactions: total"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "C",
+              "target": ""
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "PostgreSQL instance rate",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_ZABBIX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 9,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "/PostgreSQL: shared/"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "A",
+              "target": ""
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "PostgreSQL shared buffers",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decbits",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "showTitle": false,
+      "titleSize": "h6",
+      "height": 250,
+      "repeat": null,
+      "repeatRowId": null,
+      "repeatIteration": null,
+      "collapse": false
+    },
+    {
+      "title": "Dashboard Row",
+      "panels": [
+        {
+          "aliasColors": {},
+          "cacheTimeout": null,
+          "combine": {
+            "label": "Others",
+            "threshold": 0
+          },
+          "datasource": "${DS_ZABBIX}",
+          "editable": true,
+          "error": false,
+          "fontSize": "80%",
+          "format": "decbits",
+          "id": 10,
+          "interval": null,
+          "legend": {
+            "percentage": false,
+            "show": true,
+            "values": true
+          },
+          "legendType": "On graph",
+          "links": [],
+          "maxDataPoints": 3,
+          "nullPointMode": "connected",
+          "pieType": "pie",
+          "span": 2,
+          "strokeWidth": 1,
+          "targets": [
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "Mount point /: free"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "A",
+              "target": ""
+            },
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "Mount point /: used"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "B",
+              "target": ""
+            }
+          ],
+          "title": "Disk overview",
+          "type": "grafana-piechart-panel",
+          "valueName": "current"
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_ZABBIX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 13,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "application": {
+                "filter": "App-PostgresPro-Linux2"
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "/PostgreSQL locks/"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "A",
+              "target": ""
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "PostgrSQL locks",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_ZABBIX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 11,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": "netif",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "application": {
+                "filter": ""
+              },
+              "functions": [],
+              "group": {
+                "filter": "$group"
+              },
+              "host": {
+                "filter": "$host"
+              },
+              "item": {
+                "filter": "/$netif/"
+              },
+              "mode": 0,
+              "options": {
+                "showDisabledItems": false
+              },
+              "refId": "A",
+              "target": ""
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Network traffic on $netif",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "bps",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "showTitle": false,
+      "titleSize": "h6",
+      "height": 391,
+      "repeat": null,
+      "repeatRowId": null,
+      "repeatIteration": null,
+      "collapse": false
+    }
+  ]
+}
